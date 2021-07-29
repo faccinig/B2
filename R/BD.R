@@ -37,7 +37,7 @@ BD_path <- function(.which = NULL, .path = NULL) {
 
 
 #' @export
-set_path <- function(.path = NULL, .which = "default") {
+BD_set_path <- function(.path = NULL, .which = "default") {
 
   stopifnot("`.path` must be defined!" = !is.null(.path),
             "`.path` must be a character!" = is.character(.path),
@@ -54,6 +54,24 @@ set_path <- function(.path = NULL, .which = "default") {
   BD_paths_lst[[.which]] <- .path
   BD_paths_lst <<- BD_paths_lst
   invisible()
+}
+
+#' @export
+BD_clear_paths <- function() {
+  BD_paths_lst <<- list()
+}
+
+#' @export
+BD_list_paths <- function() {
+  lst_paths <- config::get("BD")
+  if (is.null(lst_paths)) lst_paths <- list()
+  if (length(BD_paths_lst) > 0L) {
+    nms <- names(BD_paths_lst)
+    for (i in seq_along(BD_paths_lst)) {
+      lst_paths[[nms[i]]] <- BD_paths_lst[[i]]
+    }
+  }
+  lst_paths
 }
 
 BD_type <- function(.path) {
