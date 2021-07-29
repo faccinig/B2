@@ -1,7 +1,5 @@
 # Path -------------------------------------------------------------------------
 
-BD_paths_lst <- list()
-
 #' Identifica o banco de dados usado
 #'
 #'
@@ -27,7 +25,10 @@ BD_path <- function(.which = NULL, .path = NULL) {
   if (is.null(.which)) .which <- "default"
   stopifnot("`.which` must be a character!" = is.character(.which),
             "`.which` must have length 1!" = length(.which) == 1L)
-  if (.which %in% names(BD_paths_lst)) return(BD_paths_lst[[.which]])
+
+  paths <- get_paths()
+
+  if (.which %in% names(paths)) return(paths[[.which]])
 
   config_path <- config::get("BD")
   if (!is.null(config_path) && .which %in% names(config_path)) return(config_path[[.which]])
@@ -51,24 +52,28 @@ BD_set_path <- function(.path = NULL, .which = "default") {
   stopifnot("`.which` must be a character!" = is.character(.which),
             "`.which` must have length 1!" = length(.path) == 1L)
 
-  BD_paths_lst[[.which]] <- .path
-  BD_paths_lst <<- BD_paths_lst
+  paths <- get_paths()
+  paths[[.which]] <- .path
+  set_paths(paths)
+
   invisible()
 }
 
 #' @export
 BD_clear_paths <- function() {
-  BD_paths_lst <<- list()
+  set_paths(list())
+  invisible()
 }
 
 #' @export
 BD_list_paths <- function() {
   lst_paths <- config::get("BD")
   if (is.null(lst_paths)) lst_paths <- list()
-  if (length(BD_paths_lst) > 0L) {
-    nms <- names(BD_paths_lst)
-    for (i in seq_along(BD_paths_lst)) {
-      lst_paths[[nms[i]]] <- BD_paths_lst[[i]]
+  paths <- get_paths()
+  if (length(paths) > 0L) {
+    nms <- names(paths)
+    for (i in seq_along(paths)) {
+      lst_paths[[nms[i]]] <- paths[[i]]
     }
   }
   lst_paths
