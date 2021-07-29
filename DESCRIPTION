@@ -1,0 +1,25 @@
+Package: B2
+Title: Bases de dados internas do ACCESS e SQlite
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Guilherme",
+           family = "Faccini",
+           role = c("aut", "cre"),
+           email = "guilherme_faccini@banrisul.com.br")
+Description: Simplifica o uso das Bases de dados internas
+    do ACCESS e SQlite
+License: GPL-2
+Imports: 
+    DBI,
+    methods,
+    odbc,
+    glue,
+    RSQLite,
+    lubridate,
+    tools
+Suggests: 
+    testthat (>= 2.1.0)
+Encoding: UTF-8
+LazyData: true
+Repository: BanriCRAN
+RoxygenNote: 7.1.1
