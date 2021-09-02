@@ -16,7 +16,8 @@ Imports:
     glue,
     RSQLite,
     lubridate,
-    tools
+    tools,
+    config
 Suggests: 
     testthat (>= 2.1.0)
 Encoding: UTF-8
