@@ -1,6 +1,6 @@
 Package: B2
 Title: Bases de dados internas do ACCESS e SQlite
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: 
     person(given = "Guilherme",
            family = "Faccini",
