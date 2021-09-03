@@ -67,10 +67,10 @@ BD_clear_paths <- function() {
 
 #' @export
 BD_list_paths <- function() {
-  if (config::is_active("BD")) {
-    lst_paths <- config::get("BD")
-    if (is.null(lst_paths)) lst_paths <- list()
-  } else lst_paths <- list()
+  lst_paths <- tryCatch(config::get("BD"),
+                        error = identity)
+  if (is.null(lst_paths) || inherits(lst_paths, "error")) lst_paths <- list()
+
   paths <- get_paths()
   if (length(paths) > 0L) {
     nms <- names(paths)
