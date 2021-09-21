@@ -154,6 +154,22 @@ BD_GetQuery <- function(stmt, .which = NULL, .path = NULL, .con = NULL, .envir =
 }
 
 #' @export
+BD_GetQueryData <- function(.data, stmt, .which = NULL, .path = NULL, .con = NULL, .envir = parent.frame()) {
+  if (is.null(.con)) {
+    .con <- BD_connection(.which = .which, .path = .path)
+    on.exit(DBI::dbDisconnect(.con))
+  }
+
+  sql <- BD_glueData(stmt, .con = .con, .envir = .envir)
+  if (length(sql) == 1L) return(BD_GetQuery(sql, .con = .con))
+
+  tbls <- lapply(sql, BD_GetQuery, .con = .con)
+  tbls <- do.call(rbind, tbls)
+
+  tibble::as_tibble(tbls)
+}
+
+#' @export
 BD_ExecuteData <- function(.data, stmt, .which = NULL, .path = NULL, .con = NULL, .envir = parent.frame()) {
   if (is.null(.con)) {
     .con <- BD_connection(.which = .which, .path = .path)
