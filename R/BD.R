@@ -160,7 +160,7 @@ BD_GetQueryData <- function(.data, stmt, .which = NULL, .path = NULL, .con = NUL
     on.exit(DBI::dbDisconnect(.con))
   }
 
-  sql <- BD_glueData(stmt, .con = .con, .envir = .envir)
+  sql <- BD_glueData(.data, stmt, .con = .con, .envir = .envir)
   if (length(sql) == 1L) return(BD_GetQuery(sql, .con = .con))
 
   tbls <- lapply(sql, BD_GetQuery, .con = .con)
